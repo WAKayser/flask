@@ -5,9 +5,22 @@ if t.TYPE_CHECKING:  # pragma: no cover
     from werkzeug.datastructures import Headers  # noqa: F401
     from werkzeug.wrappers import Response  # noqa: F401
 
+
+class IsDataclass(t.Protocol):
+    """Check if method is dataclass"""
+
+    __dataclass_fields__: t.Dict
+
+
 # The possible types that are directly convertible or are a Response object.
 ResponseValue = t.Union[
-    "Response", str, bytes, t.Dict[str, t.Any], t.Iterator[str], t.Iterator[bytes]
+    "Response",
+    str,
+    bytes,
+    t.Dict[str, t.Any],
+    t.Iterator[str],
+    t.Iterator[bytes],
+    IsDataclass,
 ]
 
 # the possible types for an individual HTTP header

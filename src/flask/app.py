@@ -1,3 +1,4 @@
+import dataclasses
 import functools
 import inspect
 import logging
@@ -1870,6 +1871,8 @@ class Flask(Scaffold):
         .. versionchanged:: 2.2
             A generator will be converted to a streaming response.
 
+            Allow Dataclasses to be used as a response.
+
         .. versionchanged:: 1.1
             A dict will be converted to a JSON response.
 
@@ -1923,6 +1926,8 @@ class Flask(Scaffold):
                 status = headers = None
             elif isinstance(rv, dict):
                 rv = jsonify(rv)
+            elif dataclasses.is_dataclass(rv):
+                rv = jsonify(dataclasses.asdict(rv))
             elif isinstance(rv, BaseResponse) or callable(rv):
                 # evaluate a WSGI callable, or coerce a different response
                 # class to the correct type

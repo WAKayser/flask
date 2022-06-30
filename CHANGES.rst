@@ -42,7 +42,7 @@ Unreleased
     them in a ``Response``. :pr:`4629`
 -   Add ``stream_template`` and ``stream_template_string`` functions to
     render a template as a stream of pieces. :pr:`4629`
-
+-   Allow dataclasses to be used as response in view functions.
 
 Version 2.1.3
 -------------

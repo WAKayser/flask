@@ -1303,6 +1303,19 @@ def test_make_response_with_response_instance(app, req_ctx):
     assert rv.headers["X-Foo"] == "bar"
 
 
+def test_make_response_with_dataclasses(app, req_ctx):
+    from dataclasses import dataclass
+
+    @dataclass
+    class TestDataclass:
+        """Simple testing class"""
+
+        message: str = "Hello, world"
+
+    rv = flask.make_response(TestDataclass())
+    assert rv.data == b'{"message":"Hello, world"}\n'
+
+
 def test_jsonify_no_prettyprint(app, req_ctx):
     app.config.update({"JSONIFY_PRETTYPRINT_REGULAR": False})
     compressed_msg = b'{"msg":{"submsg":"W00t"},"msg2":"foobar"}\n'
